@@ -1,22 +1,24 @@
 import { useState } from "react";
+import ToDoItem from "./ToDoItem";
 
 
 function App() {
 
-  const [newItem, setnewItem] = useState("");
+  const [newItem, setNewItem] = useState("");
   const [items, setItems] = useState([]);
 
   function handleChange(event) {
-    setnewItem(event.target.value)
+    setNewItem(event.target.value)
     
   }
 
   function addItem(params) {
-    setItems(prevValue =>[
+    if (newItem.trim() !== ""){
+        setItems(prevValue =>[
       ...prevValue,newItem
     ]);
-    setnewItem("");
-    
+    setNewItem("");
+    }
   }
 
   return (
@@ -35,7 +37,9 @@ function App() {
     <div>
       <ul className="">
        {items.map((item,index) =>(
-        <li key={index}>{item}</li>
+       <ToDoItem
+       key={index}
+       text={item} />
        ))} 
       
       </ul>
