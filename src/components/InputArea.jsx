@@ -2,6 +2,7 @@ import { useState } from "react";
 
 function InputArea (props){
     const [newItem, setNewItem] = useState("");
+    const [deadLine, setdeadLine] = useState("");
 
     
   function handleChange(event) {
@@ -10,14 +11,37 @@ function InputArea (props){
   }
 
   function handleAdd() {
-    props.onAdd(newItem)
+    props.onAdd({
+      text: newItem,
+      deadline: deadLine
+    });
     setNewItem("");
+    setdeadLine("");
+    }
+  
+  function handleDateChange(e) {
+    setdeadLine(e.target.value)
   }
+
+
     return (
     <div className="form">
-      <input onChange={handleChange}
-      type="text"
-      value={newItem}></input>
+      <div className="">
+        <input
+          className="inputItem" 
+          onChange={handleChange}
+          type="text"
+          value={newItem}
+          placeholder="Add a task">
+          </input>
+          <input 
+          className="inputDeadline"
+          onChange={handleDateChange}
+          type="date"
+          value={deadLine}>
+        </input>
+      </div>
+     
       <button onClick={handleAdd}>
         <span>Add</span>
       </button>

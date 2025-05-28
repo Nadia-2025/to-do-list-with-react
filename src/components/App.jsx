@@ -8,7 +8,7 @@ function App() {
   const [items, setItems] = useState([]);
 
   function addItem(newItem) {
-    if (newItem.trim() !== ""){
+    if (newItem.text.trim() !== ""){
         setItems(prevValue =>[
       ...prevValue,newItem
     ]);
@@ -28,7 +28,8 @@ function App() {
        {items.map((item,index) =>(
        <ToDoItem
        key={index}
-       text={item} />
+       text={item.text}
+       deadline={item.deadline} />
        ))} 
       
       </ul>

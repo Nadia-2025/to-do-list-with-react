@@ -11,7 +11,11 @@ function handleOnClick() {
         <li onClick={handleOnClick}
         style={{textDecoration: IsDone ? "line-through" : "none",
             cursor:"pointer"
-        }}>{props.text}</li>
+        }}>{props.text}
+        <span>
+          (Due: {props.deadline})
+        </span>
+        </li>
     )
 }
 

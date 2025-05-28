@@ -41,7 +41,9 @@ transform: rotate(2deg);
   font-size: 1.5rem;
 }
 
-.form input{
+.inputItem,
+.inputDeadline
+{
   box-sizing: border-box;
   background-color: transparent;
   padding: 0.7rem;
@@ -53,8 +55,8 @@ transform: rotate(2deg);
   font-size: 1rem;
   color: hsla(260, 2%, 25%, 0.7);
   width: 70%;
-  margin-bottom: 20px; 
 }
+
 .form button{
   padding: 0;
   border: none;
@@ -63,6 +65,7 @@ transform: rotate(2deg);
   padding-bottom: 3px;
   border-radius: 5px;
   background-color: #ffeaa7;
+  margin-top: 20px;
 }
 
 button span {
@@ -77,3 +80,6 @@ li {
   position: relative;
   padding: 0.5rem;
 }
+
+
+
