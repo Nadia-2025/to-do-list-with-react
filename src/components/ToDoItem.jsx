@@ -8,6 +8,10 @@ function handleOnClick() {
     setIsDone(prev => !prev);
 }
 
+function handleDeleteClick() {
+  props.onDelete();
+}
+
     return (
       <li> 
         <span
@@ -23,7 +27,8 @@ function handleOnClick() {
           (Due: {props.deadline})
         </span>
         <button
-        className="deleteBtn">
+        className="deleteBtn"
+        onClick={handleDeleteClick}>
          <RiDeleteBin2Line />
         </button>
       </li>

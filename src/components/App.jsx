@@ -1,12 +1,17 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import ToDoItem from "./ToDoItem";
 import InputArea from "./InputArea";
-import "../style.css";
-
 
 function App() {
 
-  const [items, setItems] = useState([]);
+  const [items, setItems] = useState(() =>{
+  const savedItems = localStorage.getItem("tasks");
+  return savedItems ? JSON.parse(savedItems) : [];
+  });
+
+  useEffect(()=>{
+    localStorage.setItem("tasks", JSON.stringify(items));
+  }, [items]);
 
   function addItem(newItem) {
     if (newItem.text.trim() !== ""){
@@ -14,6 +19,10 @@ function App() {
       ...prevValue,newItem
     ]);
     }
+  }
+
+  function deleteItem(indexToDelete) {
+    setItems(prevValue => prevValue.filter((_, index) => index !== indexToDelete))
   }
 
   return (
@@ -30,7 +39,8 @@ function App() {
        <ToDoItem
        key={index}
        text={item.text}
-       deadline={item.deadline} />
+       deadline={item.deadline}
+       onDelete={() => deleteItem(index)} />
        ))} 
       
       </ul>
