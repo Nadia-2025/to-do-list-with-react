@@ -1,6 +1,7 @@
 import { useState } from "react";
 import ToDoItem from "./ToDoItem";
 import InputArea from "./InputArea";
+import "../style.css";
 
 
 function App() {

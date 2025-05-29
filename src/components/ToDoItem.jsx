@@ -1,4 +1,5 @@
 import { useState } from "react";
+import { RiDeleteBin2Line } from "react-icons/ri";
 
 function ToDoItem(props) {
 const [IsDone, setIsDone] = useState(false);
@@ -21,6 +22,10 @@ function handleOnClick() {
         className="deadlineText">
           (Due: {props.deadline})
         </span>
+        <button
+        className="deleteBtn">
+         <RiDeleteBin2Line />
+        </button>
       </li>
     )
 }
