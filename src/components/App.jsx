@@ -25,6 +25,14 @@ function App() {
     setItems(prevValue => prevValue.filter((_, index) => index !== indexToDelete))
   }
 
+  function editItem(indexToEdit, updatedItem) {
+    setItems(prevValue => 
+      prevValue.map((item, index)=>
+        index === indexToEdit ? updatedItem : item
+      )
+    );
+  }
+
   return (
   <div className="container">
     <div className="heading">
@@ -40,7 +48,9 @@ function App() {
        key={index}
        text={item.text}
        deadline={item.deadline}
-       onDelete={() => deleteItem(index)} />
+       onDelete={() => deleteItem(index)}
+       onEdit={(updatedItem) => editItem(index,updatedItem )}
+        />
        ))} 
       
       </ul>
