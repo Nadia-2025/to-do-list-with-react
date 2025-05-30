@@ -107,6 +107,34 @@ li {
   font-size: 1.2rem;
   flex-shrink: 0;
 }
+.editArea{
+  display: flex;
+  flex-wrap: nowrap;
+  align-items: center;
+  justify-content: space-between;
+  gap:5px;
+}
+.sharedStyle{
+  font-family: "Architects Daughter", cursive;
+  font-size: 0.9rem;
+  text-decoration: none;
+  border-radius: 5px;
+  background-color: #fdcb6e;
+  color:  hsl(198, 1%, 29%);
+  border: none;
+}
+
+.editInput {
+  flex: 1 1 auto;
+}
+.editDate{
+  flex: 0 1 auto;
+}
+.editButton {
+  cursor: pointer;
+  flex: 0 1 auto;
+}
+
 
 
 

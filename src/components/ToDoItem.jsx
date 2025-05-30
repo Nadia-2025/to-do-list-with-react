@@ -36,20 +36,25 @@ function ToDoItem(props) {
   return (
     <li>
       {isEditing ? (
-        <>
+        <div className="editArea">
           <input
+          className="sharedStyle editInput"
             type="text"
             value={editText}
             onChange={e => setEditText(e.target.value)}
           />
           <input
+          className="sharedStyle editDate"
           type="date"
           value={editDate}
           onChange={e => setEditDate(e.target.value)}
           />  
-          <button onClick={handleSave}>Save</button>
-          <button onClick={handleCancel}>Cancel</button>
-        </>
+          <button
+            className="sharedStyle editButton" 
+            onClick={handleSave}>Save</button>
+          <button
+            className="sharedStyle editButton"  onClick={handleCancel}>Cancel</button>
+        </div>
         ) : (
         <>
           <span
