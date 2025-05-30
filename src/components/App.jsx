@@ -16,8 +16,7 @@ function App() {
   function addItem(newItem) {
     if (newItem.text.trim() !== ""){
         setItems(prevValue =>[
-      ...prevValue,newItem
-    ]);
+      ...prevValue, {...newItem, completed: false}]);
     }
   }
 
@@ -29,6 +28,14 @@ function App() {
     setItems(prevValue => 
       prevValue.map((item, index)=>
         index === indexToEdit ? updatedItem : item
+      )
+    );
+  }
+
+  function toggleCompleted(indexToToggle) {
+    setItems(prevValue => 
+      prevValue.map((item, index)=>
+        index === indexToToggle ? {...item, completed: !item.completed } : item
       )
     );
   }
@@ -48,8 +55,10 @@ function App() {
        key={index}
        text={item.text}
        deadline={item.deadline}
+       completed={item.completed}
        onDelete={() => deleteItem(index)}
        onEdit={(updatedItem) => editItem(index,updatedItem )}
+       onToggleCompleted={() => toggleCompleted(index)}
         />
        ))} 
       
