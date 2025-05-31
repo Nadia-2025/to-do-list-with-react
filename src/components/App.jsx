@@ -1,6 +1,7 @@
 import { useEffect, useState } from "react";
 import ToDoItem from "./ToDoItem";
 import InputArea from "./InputArea";
+import { v4 as uuidv4 } from "uuid";
 
 function App() {
 
@@ -15,30 +16,71 @@ function App() {
 
   function addItem(newItem) {
     if (newItem.text.trim() !== ""){
-        setItems(prevValue =>[
-      ...prevValue, {...newItem, completed: false}]);
+      const itemWithId = {
+        ...newItem,
+        id: uuidv4(),
+        completed: false
+      };
+      setItems(prevValue =>[
+      ...prevValue, itemWithId]);
     }
   }
 
-  function deleteItem(indexToDelete) {
-    setItems(prevValue => prevValue.filter((_, index) => index !== indexToDelete))
+  function deleteItem(idToDelete) {
+    setItems(prevValue => prevValue.filter(item=> item.id !== idToDelete))
   }
 
-  function editItem(indexToEdit, updatedItem) {
+  function editItem(idToEdit, updatedItem) {
     setItems(prevValue => 
-      prevValue.map((item, index)=>
-        index === indexToEdit ? updatedItem : item
+      prevValue.map(item=>
+        item.id === idToEdit ? { ...item, ...updatedItem } : item
       )
     );
   }
 
-  function toggleCompleted(indexToToggle) {
+  function toggleCompleted(idToToggle) {
     setItems(prevValue => 
-      prevValue.map((item, index)=>
-        index === indexToToggle ? {...item, completed: !item.completed } : item
+      prevValue.map(item=>
+        item.id === idToToggle ? {...item, completed: !item.completed } : item
       )
     );
   }
+  function getItemState(item) {
+    const today = new Date();
+    const deadline = new Date(item.deadline);
+    deadline.setHours(23, 59, 59, 999);
+
+    const diffHours = (deadline - today) / (1000*60*60);
+
+    if (item.completed) {
+    return  "completed";
+    } else if (deadline < today) {
+      return "overdue";
+    } else if(diffHours <=24){
+      return  "almost-due";
+    } else {
+      return "pending";
+    }
+  }
+
+  const sortedItems = [...items].sort((a,b) => {
+    const stateOrder = {
+      "overdue": 0,
+      "almost-due": 1,
+      "pending":2,
+      "completed":3
+    };
+
+    const stateA = getItemState(a);
+    const stateB = getItemState(b);
+
+    if (stateOrder[stateA] !== stateOrder[stateB]) {
+      return stateOrder[stateA] - stateOrder[stateB]
+    }
+    return new Date (a.deadline) -  new Date (b.deadline);
+
+  });
+
 
   return (
   <div className="container">
@@ -50,17 +92,22 @@ function App() {
     />
     <div>
       <ul className="">
-       {items.map((item,index) =>(
+       {sortedItems.map((item,index) =>{
+        console.log("Rendering item:", item);
+        return (
        <ToDoItem
-       key={index}
+       key={item.id}
+       id={item.id}
        text={item.text}
        deadline={item.deadline}
        completed={item.completed}
-       onDelete={() => deleteItem(index)}
-       onEdit={(updatedItem) => editItem(index,updatedItem )}
-       onToggleCompleted={() => toggleCompleted(index)}
+       state={getItemState(item)}
+       onDelete={() => deleteItem(item.id)}
+       onEdit={(updatedItem) => editItem(item.id,updatedItem )}
+       onToggleCompleted={() => toggleCompleted(item.id)}
         />
-       ))} 
+       );
+      })} 
       
       </ul>
     </div>

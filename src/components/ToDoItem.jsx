@@ -3,10 +3,14 @@ import { RiDeleteBin2Line } from "react-icons/ri";
 
 function ToDoItem(props) {
   const [isEditing, setIsEditing] = useState(false);
-  const [editText, setEditText ] = useState();
-  const [editDate, setEditDate ] = useState();
+  const [editText, setEditText ] = useState("");
+  const [editDate, setEditDate ] = useState("");
+
+  const state =props.state;
 
   function handleDoubleClick() {
+    setEditText(props.text);
+    setEditDate(props.deadline);
     setIsEditing (true);
   }
 
@@ -16,8 +20,10 @@ function ToDoItem(props) {
 
   function handleSave() {
     props.onEdit({
+      id:props.id,
       text:editText,
-      deadline:editDate
+      deadline:editDate,
+      completed: props.completed
     });
     setIsEditing(false);
   }
@@ -26,22 +32,6 @@ function ToDoItem(props) {
     setIsEditing(false);
     setEditText(props.text);
     setEditDate(props.deadline);
-    }
-
-    const today = new Date();
-    const deadline = new Date(props.deadline);
-    const diffHours = (deadline - today) / (1000*60*60);
-
-    let state = "";
-
-    if (props.completed) {
-      state = "completed";
-    } else if (deadline < today) {
-      state = "overdue";
-    } else if(diffHours <=24){
-      state = "almost-due";
-    } else {
-      state = "pending";
     }
 
 
@@ -73,8 +63,7 @@ function ToDoItem(props) {
             type="checkbox"
             checked={props.completed}
             onChange={props.onToggleCompleted}
-            style={{color:"green"}}>
-          </input>
+          />
           <span 
           className={`state ${state}`}
           style={{
